@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  controlBack:
+    container_name: controlBackend
+    restart: always
+    build: .
+    ports: 
+      - "5000:3001"
+    volumes:
+      - .:/usr/src/app

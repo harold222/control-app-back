@@ -1,0 +1,30 @@
+{
+    "users": [
+        {
+            "name": "admin",
+            "lastname": "test",
+            "email": "admin@test.co",
+            "password": "Test123.",
+            "phone": 1234567,
+            "img": "https://cdn-icons-png.flaticon.com/512/147/147144.png",
+            "city": "Bogota",
+            "rol": "ADMIN_ROLE",
+            "age": 22,
+            "sex": "M",
+            "state": true
+        },
+        {
+            "name": "user",
+            "lastname": "test",
+            "email": "user@test.co",
+            "password": "Test123.",
+            "phone": 76543210,
+            "img": "https://cdn-icons-png.flaticon.com/512/147/147142.png",
+            "city": "Bogota",
+            "rol": "USER_ROLE",
+            "age": 45,
+            "sex": "F",
+            "state": true
+        }
+    ]
+}
