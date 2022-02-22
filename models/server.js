@@ -15,7 +15,7 @@ class Server {
 
         this.connectDb()
 
-        // generar observable de usuarios
+        // generar observable de usuarios ingresar - Lifecycle
 
         this.middleware()
         this.routes()
