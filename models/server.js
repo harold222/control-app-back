@@ -12,7 +12,7 @@ class Server {
         this.port = process.env.PORT
         // all paths endpoints of the app
         this.paths = {
-            users: '/api/user',
+            users: '/api/users',
             authentication: '/api/auth',
         }
     }

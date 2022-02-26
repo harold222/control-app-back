@@ -18,8 +18,27 @@ const setDefaultUsers = async () => {
 
 // ---------------API---------------
 
+// /api/users/621aa66eac9b457115de9a74
+const getSpecificUser = async(req, res = response, next) => {
+    if (req.params) {
+        const userDb = await User.findById(req.params.id)
+        if (userDb) {
+            res.status(StatusCodes.ACCEPTED).json({
+                status: true,
+                user: userDb
+            }) 
+        } else {
+            res.status(StatusCodes.ACCEPTED).json({
+                status: false,
+                error: 'The user was not found'
+            })    
+        }
+    } else
+        res.status(StatusCodes.BAD_GATEWAY).send(ReasonPhrases.BAD_GATEWAY)
+}
+
 const getAllUsers = (req, res = response, next) => {
-    
+    res.status(StatusCodes.ACCEPTED).json({ok: 'ok'})
 }
 
 const getUnregisteredUsers = (req, res = response, next) => {
@@ -36,7 +55,7 @@ const postUser = async (req, res = response, next) => {
             const newUser = new User({ ...req.body })
             const { _id } = await newUser.save()
             res.status(StatusCodes.CREATED).json({
-                result: true,
+                status: true,
                 _id
             })
         } else
@@ -56,6 +75,7 @@ const deleteUser = (req, res = response, next) => {
 }
 
 module.exports = {
+    getSpecificUser,
     getAllUsers,
     getUnregisteredUsers,
     getRegisteredUsers,
