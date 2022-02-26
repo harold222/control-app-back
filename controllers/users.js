@@ -1,5 +1,6 @@
 const { response, request } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
+const crypt = require('bcryptjs')
 const User = require('../models/user')
 
 // ---------------TASKS---------------
@@ -32,6 +33,7 @@ const getSpecificUser = async(req, res = response, next) => {
         res.status(StatusCodes.BAD_GATEWAY).send(ReasonPhrases.BAD_GATEWAY)
 }
 
+// api/users
 const getAllUsers = (req, res = response, next) => {
     res.status(StatusCodes.ACCEPTED).json({ok: 'ok'})
 }
@@ -47,7 +49,18 @@ const getRegisteredUsers = (req, res = response, next) => {
 const postUser = async (req, res = response, next) => {
     try {
         if (req.body) {
-            const newUser = new User({ ...req.body })
+            let body = { ...req.body }
+
+            // the email exist
+
+
+            // crypt the password
+            body.password = crypt.hashSync(body.password, crypt.genSaltSync(12))
+
+            // save db
+
+
+            const newUser = new User(body)
             const { _id } = await newUser.save()
             res.status(StatusCodes.CREATED).json({
                 status: true,
