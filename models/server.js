@@ -8,31 +8,25 @@ class Server {
 
     constructor() {
         this.app = express()
+        // default port in local or production
         this.port = process.env.PORT
+        // all paths endpoints of the app
         this.paths = {
-            users: '/api/users',
+            users: '/api/user',
             authentication: '/api/auth',
         }
-
-        // this.connectDb()
     }
 
     async connections() {
-        // console.log('1')
+        // generate connection with the db
         await dbConnection()
-        // console.log('2')
         this.middleware()
         this.routes()
-        // console.log('3')
         await setDefaultUsers()
-        // console.log('4')
-    }
-
-    async connectDb() {
-        await dbConnection();
     }
 
     middleware() {
+        // support post
         this.app.use(cors())
         this.app.use(express.static('public'))
         this.app.use(express.json({ type: '*/*' }))
