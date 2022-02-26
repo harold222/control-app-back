@@ -22,17 +22,12 @@ const setDefaultUsers = async () => {
 const getSpecificUser = async(req, res = response, next) => {
     if (req.params) {
         const userDb = await User.findById(req.params.id)
-        if (userDb) {
-            res.status(StatusCodes.ACCEPTED).json({
-                status: true,
-                user: userDb
-            }) 
-        } else {
-            res.status(StatusCodes.ACCEPTED).json({
-                status: false,
-                error: 'The user was not found'
-            })    
-        }
+
+        res.status(StatusCodes.ACCEPTED).json({
+            status: userDb ? true : false,
+            user: userDb || null,
+            error: !userDb ? 'The user was not found' : ''
+        }) 
     } else
         res.status(StatusCodes.BAD_GATEWAY).send(ReasonPhrases.BAD_GATEWAY)
 }
