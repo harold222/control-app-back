@@ -1,7 +1,7 @@
 const server = require('./server')
-const user = require('./usuario')
+const User = require('./user')
 
 module.exports = {
     server,
-    user
+    User
 }

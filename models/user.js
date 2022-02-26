@@ -50,6 +50,11 @@ const UserSchema = Schema({
         required: false,
         default: ""
     },
+    quantityChildrens: {
+        type: Number,
+        required: false,
+        default: 0
+    },
     state: {
         type: Boolean,
         default: true

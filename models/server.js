@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const { setDefaultUsers } = require('../controllers/users')
 
 class Server {
 
@@ -13,12 +14,18 @@ class Server {
             authentication: '/api/auth',
         }
 
-        this.connectDb()
+        // this.connectDb()
+    }
 
-        // generar observable de usuarios ingresar - Lifecycle
-
+    async connections() {
+        // console.log('1')
+        await dbConnection()
+        // console.log('2')
         this.middleware()
         this.routes()
+        // console.log('3')
+        await setDefaultUsers()
+        // console.log('4')
     }
 
     async connectDb() {

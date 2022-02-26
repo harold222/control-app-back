@@ -1,6 +1,22 @@
 const { response, request } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
-const { user } = require('../models/index')
+const User = require('../models/user')
+
+// ---------------TASKS---------------
+const setDefaultUsers = async () => {
+    const allUsers = await User.count()
+    
+    if (!allUsers) {
+        const testUsers = require('../helpers/usersTest.json')
+        User.insertMany(testUsers.users, (error, inserted) => {
+            !error ?
+                console.log('Create users test') :
+                console.log('Error save users')
+        })
+    }
+}
+
+// ---------------API---------------
 
 const getUsers = (req, res = response, next) => {
     
@@ -22,5 +38,6 @@ module.exports = {
     getUsers,
     postUser,
     putUser,
-    deleteUser
+    deleteUser,
+    setDefaultUsers
 }

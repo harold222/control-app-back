@@ -11,6 +11,4 @@ const dbConnection = async () => {
     } catch (error) { throw new Error('Error DB: ', error) }
 }
 
-module.exports = {
-    dbConnection
-}
+module.exports = { dbConnection }
