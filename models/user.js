@@ -40,10 +40,12 @@ const UserSchema = Schema({
         required: [true, 'The rol is required'],
         emun: ['ADMIN_ROLE', 'USER_ROLE']
     },
-    age: {
-        type: Number,
-        required: false,
-        default: 0
+    // calcular edad a partir de fecha actual -  nacimiento
+    birthDate: {
+        type: Date,
+        required: [true, 'The birth date is required'],
+        min: '1910-01-01',
+        max: '2022-01-01'
     },
     sex: {
         type: String,
