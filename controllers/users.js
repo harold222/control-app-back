@@ -66,8 +66,19 @@ const getSpecificUser = async(req, res = response, next) => {
 }
 
 // api/users
-const getAllUsers = (req, res = response, next) => {
-    res.status(StatusCodes.ACCEPTED).json({ok: 'ok'})
+const getAllUsers = async (req, res = response, next) => {
+    const { limit = 10, from = 0, status = true } = req.query
+
+    let allUsers = status != null ? 
+        User.find({ status: Boolean(status) }) :
+        allUsers = User.find()
+
+    const users = await allUsers.skip(Number(from)).limit(Number(limit))
+
+    res.status(StatusCodes.ACCEPTED).json({
+        status: true,
+        users
+    })
 }
 
 const getUnregisteredUsers = (req, res = response, next) => {

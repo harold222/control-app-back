@@ -12,10 +12,10 @@ const {
 } = require('../controllers/users');
 const { validateRol, validateEmail, validateUser } = require('../helpers/db-validators');
 
-
 const router = Router();
 
 router.get('/', getAllUsers)
+
 router.get('/:id', [
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
