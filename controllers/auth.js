@@ -1,23 +1,25 @@
 const { response } = require('express')
 const { StatusCodes } = require('http-status-codes');
+const { generateJWT } = require('../helpers/generateJWT');
 const User = require('../models/user');
-const bcryptjs = require('bcryptjs')
+const bcryptjs = require('bcryptjs');
 
 const login = async(req, res = response, next) => {
     try {
         const { email, password } = req.body;
-
         const userDb = await User.findOne({ email })
 
-        // user is active
         if (userDb.state) {
-            // verify password
             const validPassword = bcryptjs.compareSync(password, userDb.password)
 
             if (validPassword) {
+
+                const token = await generateJWT(userDb.id, userDb.name, userDb.lastname, userDb.email, userDb.rol)
+
                 return res.status(StatusCodes.ACCEPTED).json({
                     status: true,
-                    message: 'Iniciando sesión.'
+                    message: 'Iniciando sesión.',
+                    token
                 }) 
             }
         } 
