@@ -3,6 +3,7 @@ const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const crypt = require('bcryptjs')
 const User = require('../models/user')
 const Questions = require('../models/questions')
+const Roles = require('../models/roles')
 const { validationResult } = require('express-validator')
 
 // ---------------TASKS---------------
@@ -27,6 +28,21 @@ const setDefaultUsers = async () => {
                 })
             } else 
                 console.log('Error save users')
+        })
+    }
+}
+
+const setDefaultRoles = async () => {
+    const allRoles = await Roles.count()
+
+    if (!allRoles) {
+        Roles.insertMany([
+            { rol: 'ADMIN_ROLE' },
+            { rol: 'USER_ROLE' }
+        ], (error, inserted) => {
+            !error ? 
+                console.log('Create roles'):
+                console.log('Error roles')
         })
     }
 }
@@ -65,9 +81,6 @@ const getRegisteredUsers = (req, res = response, next) => {
 
 const postUser = async (req, res = response, next) => {
     const errors = validationResult(req)
-
-    if (!errors.isEmpty()) 
-        return res.status(StatusCodes.BAD_GATEWAY).json(errors)
 
     try {
         if (req.body) {
@@ -123,5 +136,6 @@ module.exports = {
     postUser,
     putUser,
     deleteUser,
-    setDefaultUsers
+    setDefaultUsers,
+    setDefaultRoles
 }

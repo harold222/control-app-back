@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
-const { setDefaultUsers } = require('../controllers/users')
+const { setDefaultUsers, setDefaultRoles } = require('../controllers/users')
 
 class Server {
 
@@ -23,6 +23,7 @@ class Server {
         this.middleware()
         this.routes()
         await setDefaultUsers()
+        await setDefaultRoles()
     }
 
     middleware() {
