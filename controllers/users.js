@@ -81,6 +81,7 @@ const getRegisteredUsers = (req, res = response, next) => {
 
 const postUser = async (req, res = response, next) => {
     const errors = validationResult(req)
+    if (errors.errors?.length) return res.status(StatusCodes.BAD_GATEWAY).json(errors)
 
     try {
         if (req.body) {

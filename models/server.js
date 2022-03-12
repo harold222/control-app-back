@@ -14,6 +14,7 @@ class Server {
         this.paths = {
             users: '/api/users',
             authentication: '/api/auth',
+            roles: '/api/roles'
         }
     }
 
@@ -35,8 +36,9 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.paths.users, require('../routes/users'))
         this.app.use(this.paths.authentication, require('../routes/auth'))
+        this.app.use(this.paths.users, require('../routes/users'))
+        this.app.use(this.paths.roles, require('../routes/roles'))
     }
 
     listen() {
