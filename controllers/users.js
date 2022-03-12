@@ -3,6 +3,7 @@ const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const crypt = require('bcryptjs')
 const User = require('../models/user')
 const Questions = require('../models/questions')
+const { validationResult } = require('express-validator')
 
 // ---------------TASKS---------------
 const setDefaultUsers = async () => {
@@ -43,7 +44,10 @@ const getSpecificUser = async(req, res = response, next) => {
             error: !userDb ? 'The user was not found' : ''
         }) 
     } else
-        res.status(StatusCodes.BAD_GATEWAY).send(ReasonPhrases.BAD_GATEWAY)
+        res.status(StatusCodes.BAD_GATEWAY).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
 }
 
 // api/users
@@ -60,19 +64,29 @@ const getRegisteredUsers = (req, res = response, next) => {
 }
 
 const postUser = async (req, res = response, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) 
+        return res.status(StatusCodes.BAD_GATEWAY).json(errors)
+
     try {
         if (req.body) {
             let body = { ...req.body }
 
             // the email exist
+            const existEmail = await User.findOne({ email: body.email })
 
+            if ( existEmail ) {
+                return res.status(StatusCodes.CONFLICT).json({
+                    status: false,
+                    message: `El correo ${body.email} ya existe.`
+                })
+            }
 
             // crypt the password
             body.password = crypt.hashSync(body.password, crypt.genSaltSync(12))
 
-            // save db
-
-
+            // save user in the db
             const newUser = new User(body)
             const { _id } = await newUser.save()
             res.status(StatusCodes.CREATED).json({
@@ -80,9 +94,15 @@ const postUser = async (req, res = response, next) => {
                 _id
             })
         } else
-            res.status(StatusCodes.BAD_GATEWAY).send(ReasonPhrases.BAD_GATEWAY)
+            res.status(StatusCodes.BAD_GATEWAY).json({
+                status: false,
+                message: 'Ha ocurrido un error.'
+            })
     } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ReasonPhrases.INTERNAL_SERVER_ERROR)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
         next()
     }
 }

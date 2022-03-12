@@ -16,7 +16,9 @@ const router = Router();
 router.get('/', getAllUsers)
 router.get('/:id', getSpecificUser)
 
-router.post('/', postUser)
+router.post('/', [
+    check('email', 'El correo no es valido.').isEmail()
+],postUser)
 
 router.put('/:id', putUser)
 
