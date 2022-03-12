@@ -1,0 +1,21 @@
+{
+    "questions": [
+        {
+            "hasChildren": "No",
+            "manyChildren": 0,
+            "salaryRange": 1000000,
+            "civilStatus": "Soltero",
+            "hasVehicle": "Si",
+            "isStudying": "No",
+            "nacionality": "Colombia"
+        },{
+            "hasChildren": "Si",
+            "manyChildren": 1,
+            "salaryRange": 1200000,
+            "civilStatus": "Casdo",
+            "hasVehicle": "No",
+            "isStudying": "Si",
+            "nacionality": "Venezuela"
+        }
+    ]
+}

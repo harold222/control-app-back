@@ -2,6 +2,7 @@ const { response, request } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const crypt = require('bcryptjs')
 const User = require('../models/user')
+const Questions = require('../models/questions')
 
 // ---------------TASKS---------------
 const setDefaultUsers = async () => {
@@ -10,8 +11,20 @@ const setDefaultUsers = async () => {
     if (!allUsers) {
         const testUsers = require('../helpers/usersTest.json')
         User.insertMany(testUsers.users, (error, inserted) => {
-            !error ?
-                console.log('Create users test') :
+            if (!error) {
+                console.log('Create users test')
+                const basicQuestions = require('../helpers/basicQuestions.json')
+
+                // complete idUser with random id
+                basicQuestions.questions[0]['idUser'] = inserted[0]['_id']
+                basicQuestions.questions[1]['idUser'] = inserted[1]['_id']
+
+                Questions.insertMany(basicQuestions.questions, (err, ins) => {
+                    !err ? 
+                        console.log('Create basic questions'):
+                        console.log('Error basic questions')
+                })
+            } else 
                 console.log('Error save users')
         })
     }
