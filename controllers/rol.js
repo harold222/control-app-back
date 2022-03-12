@@ -1,5 +1,4 @@
 const { response } = require('express')
-const { validationResult } = require('express-validator')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const Roles = require('../models/roles')
 
@@ -12,9 +11,6 @@ const getAllRoles = async (req, res = response, next) => {
 }
 
 const createNewRoles = async (req, res = response, next) => {
-    const errors = validationResult(req)
-    if (errors.errors?.length) return res.status(StatusCodes.BAD_GATEWAY).json(errors)
-
     try {
         if (req.body?.roles) {
             await Roles.insertMany(req.body.roles.map(rolName => ({ rol: rolName })))

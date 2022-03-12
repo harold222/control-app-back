@@ -23,8 +23,17 @@ const validateUser = async (id = '') => {
     if (!existUser) throw new Error(`El usuario con id ${id} no existe.`)
 }
 
+const existEmail =  async (email = '') => {
+    if (!email) throw new Error(`El email es requerido`)
+
+    const existEmail = await user.findOne({ email })
+    if (!existEmail) 
+        throw new Error(`el email ${email} no existe.`)
+}
+
 module.exports = {
     validateRol,
     validateEmail,
-    validateUser
+    validateUser,
+    existEmail
 }

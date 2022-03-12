@@ -71,8 +71,8 @@ const getAllUsers = async (req, res = response, next) => {
         const { limit = 10, from = 0, status = true } = req.query
 
         const resp = await Promise.all([
-            User.countDocuments({ status: Boolean(status) }),
-            User.find({ status: Boolean(status) }).skip(Number(from)).limit(Number(limit))
+            User.countDocuments({ state: Boolean(status) }),
+            User.find({ state: Boolean(status) }).skip(Number(from)).limit(Number(limit))
         ])
 
         res.status(StatusCodes.ACCEPTED).json({

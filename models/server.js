@@ -19,7 +19,6 @@ class Server {
     }
 
     async connections() {
-        // generate connection with the db
         await dbConnection()
         this.middleware()
         this.routes()
@@ -28,7 +27,6 @@ class Server {
     }
 
     middleware() {
-        // support post
         this.app.use(cors())
         this.app.use(express.static('public'))
         this.app.use(express.json({ type: '*/*' }))

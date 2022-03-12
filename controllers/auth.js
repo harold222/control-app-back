@@ -1,24 +1,38 @@
 const { response } = require('express')
-const { ReasonPhrases, StatusCodes } = require('http-status-codes')
+const { StatusCodes } = require('http-status-codes');
+const User = require('../models/user');
+const bcryptjs = require('bcryptjs')
 
-const login = (req, res = response, next) => {
-
+const login = async(req, res = response, next) => {
     try {
         const { email, password } = req.body;
 
-        // exist email
+        const userDb = await User.findOne({ email })
 
         // user is active
+        if (userDb.state) {
+            // verify password
+            const validPassword = bcryptjs.compareSync(password, userDb.password)
 
-        // verify password
+            if (validPassword) {
+                return res.status(StatusCodes.ACCEPTED).json({
+                    status: true,
+                    message: 'Iniciando sesión.'
+                }) 
+            }
+        } 
 
-        // generate jwt
-
+        res.status(StatusCodes.ACCEPTED).json({
+            status: false,
+            message: 'Email o contraseña incorrectos.'
+        }) 
     } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ReasonPhrases.INTERNAL_SERVER_ERROR)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
     }
-
-    res.json({  })
 }
 
 module.exports = {
