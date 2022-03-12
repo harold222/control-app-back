@@ -86,16 +86,6 @@ const postUser = async (req, res = response, next) => {
         if (req.body) {
             let body = { ...req.body }
 
-            // the email exist
-            const existEmail = await User.findOne({ email: body.email })
-
-            if ( existEmail ) {
-                return res.status(StatusCodes.CONFLICT).json({
-                    status: false,
-                    message: `El correo ${body.email} ya existe.`
-                })
-            }
-
             // crypt the password
             body.password = crypt.hashSync(body.password, crypt.genSaltSync(12))
 
