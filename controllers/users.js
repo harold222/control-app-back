@@ -55,9 +55,8 @@ const getSpecificUser = async(req, res = response, next) => {
         const userDb = await User.findById(req.params.id)
 
         res.status(StatusCodes.ACCEPTED).json({
-            status: userDb ? true : false,
-            user: userDb || null,
-            error: !userDb ? 'The user was not found' : ''
+            status: true,
+            user: userDb,
         }) 
     } else
         res.status(StatusCodes.BAD_GATEWAY).json({
@@ -80,9 +79,6 @@ const getRegisteredUsers = (req, res = response, next) => {
 }
 
 const postUser = async (req, res = response, next) => {
-    const errors = validationResult(req)
-    if (errors.errors?.length) return res.status(StatusCodes.BAD_GATEWAY).json(errors)
-
     try {
         if (req.body) {
             let body = { ...req.body }
@@ -111,11 +107,26 @@ const postUser = async (req, res = response, next) => {
     }
 }
 
-const putUser = (req, res = response, next) => {
+const putUser = async (req, res = response, next) => {
+    try {
+        const { id } = req.params
+        const { password, email, ...data } = req.body
 
+        if (password) 
+            data.password = crypt.hashSync(password, crypt.genSaltSync(12))
+        
+        await User.findByIdAndUpdate(id, data)
+        res.status(StatusCodes.ACCEPTED).json({ status: true })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
 }
 
-const deleteUser = (req, res = response, next) => {
+const deleteUser = async(req, res = response, next) => {
 
 }
 

@@ -6,8 +6,7 @@ const router = Router();
 
 router.get('/', getAllRoles)
 router.post('/', [
-    // ["rol1", "rol2"]
-    check('roles', 'Debe enviar un array de roles').isArray(),  
+    check('roles', 'Debe enviar un array de roles: ["rol1", "rol2"]').isArray(),  
 ], createNewRoles)
 
 module.exports = router;
