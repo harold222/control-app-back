@@ -7,6 +7,7 @@ const {
     postUser,
     putUser,
     deleteUser,
+    changeStateUser
 } = require('../controllers/users');
 const { validateRol, validateEmail, validateUser } = require('../helpers/db-validators');
 
@@ -19,6 +20,11 @@ router.get('/:id', [
     check('id').custom(validateUser),
     validateFields
 ], getSpecificUser)
+
+router.get('/newstate/:id', [
+    check('id', 'id usuario invalido').isMongoId(),
+    check('id').custom(validateUser),
+], changeStateUser)
 
 router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
@@ -37,6 +43,9 @@ router.put('/:id', [
     validateFields
 ], putUser)
 
-router.delete('/', deleteUser)
+router.delete('/:id', [
+    check('id', 'id usuario invalido').isMongoId(),
+    check('id').custom(validateUser),
+], deleteUser)
 
 module.exports = router;

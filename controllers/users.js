@@ -141,8 +141,40 @@ const putUser = async (req, res = response, next) => {
 
 // api/users
 const deleteUser = async(req, res = response, next) => {
-
+    try {
+        const { id } = req.params
+        await User.findByIdAndDelete(id)
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true
+        })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
 }
+
+// api/users/newstate/id
+const changeStateUser = async(req, res = response, next) => {
+    try {
+        const { id } = req.query
+        const newState = req.query?.state || false
+
+        await User.findByIdAndUpdate(id, { state: Boolean(newState) })
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true
+        })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 
 module.exports = {
     getSpecificUser,
@@ -151,5 +183,6 @@ module.exports = {
     putUser,
     deleteUser,
     setDefaultUsers,
-    setDefaultRoles
+    setDefaultRoles,
+    changeStateUser
 }
