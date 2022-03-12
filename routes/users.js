@@ -4,8 +4,6 @@ const { validateFields } = require('../middlewares/validate-fields');
 const {
     getAllUsers,
     getSpecificUser,
-    getUnregisteredUsers,
-    getRegisteredUsers,
     postUser,
     putUser,
     deleteUser,

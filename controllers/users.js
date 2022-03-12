@@ -76,7 +76,6 @@ const getAllUsers = async (req, res = response, next) => {
     const users = await allUsers.skip(Number(from)).limit(Number(limit))
 
     res.status(StatusCodes.ACCEPTED).json({
-        status: true,
         users
     })
 }
@@ -85,10 +84,26 @@ const getUnregisteredUsers = (req, res = response, next) => {
 
 }
 
-const getRegisteredUsers = (req, res = response, next) => {
+        const resp = await Promise.all([
+            User.countDocuments({ status: Boolean(status) }),
+            User.find({ status: Boolean(status) }).skip(Number(from)).limit(Number(limit))
+        ])
 
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true,
+            total: resp[0],
+            users: resp[1],
+        })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
 }
 
+// api/users
 const postUser = async (req, res = response, next) => {
     try {
         if (req.body) {
@@ -118,6 +133,7 @@ const postUser = async (req, res = response, next) => {
     }
 }
 
+// api/users
 const putUser = async (req, res = response, next) => {
     try {
         const { id } = req.params
@@ -137,6 +153,7 @@ const putUser = async (req, res = response, next) => {
     }
 }
 
+// api/users
 const deleteUser = async(req, res = response, next) => {
 
 }
@@ -144,8 +161,6 @@ const deleteUser = async(req, res = response, next) => {
 module.exports = {
     getSpecificUser,
     getAllUsers,
-    getUnregisteredUsers,
-    getRegisteredUsers,
     postUser,
     putUser,
     deleteUser,
