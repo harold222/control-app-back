@@ -1,12 +1,18 @@
 const { Router } = require('express')
 const { check } = require('express-validator');
 const { getAllRoles, createNewRoles } = require('../controllers/rol');
-const { validateFields } = require('../middlewares/validate-fields');
+const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
 
 const router = Router();
 
-router.get('/', getAllRoles)
+router.get('/', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE', 'USER_ROLE'),
+], getAllRoles)
+
 router.post('/', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE'),
     check('roles', 'Debe enviar un array de roles: ["rol1", "rol2"]').isArray(),  
     validateFields
 ], createNewRoles)

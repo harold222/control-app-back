@@ -10,6 +10,6 @@ router.post('/login',[
     check('email').custom(existEmail),
     check('password', 'The password is required').not().isEmpty(),
     validateFields
-],login)
+], login)
 
 module.exports = router;
