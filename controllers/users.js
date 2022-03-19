@@ -20,6 +20,7 @@ const setDefaultUsers = async () => {
                 // complete idUser with random id
                 basicQuestions.questions[0]['idUser'] = inserted[0]['_id']
                 basicQuestions.questions[1]['idUser'] = inserted[1]['_id']
+                basicQuestions.questions[2]['idUser'] = inserted[1]['_id']
 
                 Questions.insertMany(basicQuestions.questions, (err, ins) => {
                     !err ? 
@@ -38,7 +39,8 @@ const setDefaultRoles = async () => {
     if (!allRoles) {
         Roles.insertMany([
             { rol: 'ADMIN_ROLE' },
-            { rol: 'USER_ROLE' }
+            { rol: 'USER_ROLE' },
+            { rol: 'HUMAN_RESOURCES_ROLE' }
         ], (error, inserted) => {
             !error ? 
                 console.log('Create roles'):

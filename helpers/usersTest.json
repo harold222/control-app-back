@@ -15,6 +15,20 @@
             "state": true
         },
         {
+            "name": "recursos",
+            "lastname": "humanos",
+            "email": "recursos@test.co",
+            "password": "$2a$12$wW/ETBCXSfA574jiBvHaQ.uMZ9f.U74DTWmTFPseMxT44cbjLDpp6",
+            "phone": 5874587,
+            "img": "https://cdn-icons-png.flaticon.com/128/3011/3011270.png",
+            "city": "Bogota",
+            "rol": "HUMAN_RESOURCES_ROLE",
+            "birthDate": "1990-04-12T00:00:00.000Z",
+            "sex": "M",
+            "quantityChildrens": 1,
+            "state": true
+        },
+        {
             "name": "user",
             "lastname": "test",
             "email": "user@test.co",

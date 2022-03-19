@@ -16,6 +16,14 @@
             "hasVehicle": "No",
             "isStudying": "Si",
             "nacionality": "Venezuela"
+        },{
+            "hasChildren": "Si",
+            "manyChildren": 2,
+            "salaryRange": 1450000,
+            "civilStatus": "Divorciado",
+            "hasVehicle": "Si",
+            "isStudying": "No",
+            "nacionality": "Colombia"
         }
     ]
 }

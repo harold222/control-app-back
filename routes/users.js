@@ -15,12 +15,12 @@ const router = Router();
 
 router.get('/', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
 ], getAllUsers)
 
 router.get('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
     validateFields
@@ -47,7 +47,7 @@ router.post('/', [
 
 router.put('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
     check('rol', 'No es un rol valido').custom(validateRol),
