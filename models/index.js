@@ -3,7 +3,8 @@ const   server = require('./server'),
         Questions = require('./questions'),
         Roles = require('./roles'),
         Stations = require('./station'),
-        Registration = require('./registration');
+        Registration = require('./registration'),
+        Records = require('./records');
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
     Questions,
     Roles,
     Stations,
-    Registration
+    Registration,
+    Records
 }

@@ -76,4 +76,4 @@ RegistrationSchema.methods.toJSON = function() {
     return data;
 }
 
-module.exports = db.model('registration', RegistrationSchema);
+module.exports = db.model('Registration', RegistrationSchema);
