@@ -24,38 +24,45 @@ const createNewRegistration = async (req, res = response, next) => {
             const { idStation } = req.body
             const createdTime = Date.now()
 
-            // create a new record
-            const createRecord = new Records({
-                createdTime,
-                idSupervisor: req.user['id'],
-                idStation,
-            })
-            const { _id: idHistory  } = await createRecord.save()
-
             // get station
             const station = await Station.findById(idStation)
             let ids = []
+        
+            if (station.idOperators?.length > 0) {
+                // create a new record
+                const createRecord = new Records({
+                    createdTime,
+                    idSupervisor: req.user['id'],
+                    idStation,
+                })
+                const { _id: idHistory  } = await createRecord.save()
 
-            for (const idOperator of station.idOperators) {
-                const newRegistration = new Registration(
-                    {
-                        createdTime,
-                        idSupervisor: req.user['id'],
-                        idOperator,
-                        idStation,
-                    }
-                );
+                for (const idOperator of station.idOperators) {
+                    const newRegistration = new Registration(
+                        {
+                            createdTime,
+                            idSupervisor: req.user['id'],
+                            idOperator,
+                            idStation,
+                        }
+                    );
+    
+                    // create registration for each operator
+                    const { _id } = await newRegistration.save();
+                    ids.push(_id);
+                }
 
-                // create registration for each operator
-                const { _id } = await newRegistration.save();
-                ids.push(_id);
+                res.status(StatusCodes.CREATED).json({
+                    status: true,
+                    history: idHistory,
+                    ids
+                })
+            } else {
+                res.status(StatusCodes.BAD_GATEWAY).json({
+                    status: false,
+                    message: `No existen operarios en la estacion ${station.name}.`,
+                })
             }
-
-            res.status(StatusCodes.CREATED).json({
-                status: true,
-                history: idHistory,
-                ids
-            })
         } else
             res.status(StatusCodes.BAD_GATEWAY).json({
                 status: false,
@@ -76,9 +83,10 @@ const updateOpeningTime = async (req, res = response, next) => {
         if (req.body) {
             await Registration.findOneAndUpdate(
                 { idOperator: req.body.idOperator, idSupervisor: req.body.idSupervisor, state: false },
-                { $set: { openingTime: new Date.now() } },
+                { $set: { openingTime: Date.now() } },
                 { new: false }
             );
+            res.status(StatusCodes.CREATED).json({ status: true })
         } else
             res.status(StatusCodes.BAD_GATEWAY).json({
                 status: false,
@@ -108,9 +116,11 @@ const updateClosingTime = async (req, res = response, next) => {
             if (registrationdb['openingTime'] != null) {
                 await Registration.findByIdAndUpdate(
                     registrationdb['_id'],
-                    { $set: { closingTime: new Date.now() } },
+                    { $set: { closingTime: Date.now() } },
                     { new: false }    
                 )
+                
+                res.status(StatusCodes.CREATED).json({ status: true })
             } else {
                 res.status(StatusCodes.BAD_GATEWAY).json({
                     status: false,
