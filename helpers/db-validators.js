@@ -1,6 +1,7 @@
-const roles = require("../models/roles")
-const user = require("../models/user")
-const station = require("../models/station")
+const   roles = require('../models/roles'),
+        user = require('../models/user'),
+        station = require('../models/station'),
+        record = require('../models/records');
 
 const validateRol = async (rol = '') => {
     if (rol) {
@@ -31,6 +32,13 @@ const validateStation = async (id = '') => {
     if (!existStation) throw new Error(`La estacion con id ${id} no existe.`)
 }
 
+const validateRecord = async (id = '') => {
+    if (!id) throw new Error(`El id es requerido`)
+
+    const existRecord = await record.findById(id)
+    if (!existRecord) throw new Error(`La estacion con id ${id} no existe.`)
+}
+
 const existEmail =  async (email = '') => {
     if (!email) throw new Error(`El email es requerido`)
 
@@ -44,5 +52,6 @@ module.exports = {
     validateEmail,
     validateUser,
     validateStation,
-    existEmail
+    existEmail,
+    validateRecord
 }

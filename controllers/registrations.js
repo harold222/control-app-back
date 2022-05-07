@@ -6,12 +6,12 @@ const Records = require('../models/records')
 
 // ---------------TASKS---------------
 
-const updateStateRegistration = async (idOperator, idSupervisor) => {
-    const registration = await Registration.findOneAndUpdate(
-        { state: false, idOperator, idSupervisor },
+const updateStateRegistration = async (idSupervisor, createdTime) => {
+    const registration = await Registration.updateMany(
+        { state: false, idSupervisor, createdTime },
         { $set: { state: true } },
-        { new: false }
-    );
+        { multi: true, upsert: false }
+    )
 
     return registration ? true : false
 }
@@ -75,7 +75,6 @@ const createNewRegistration = async (req, res = response, next) => {
         })
         next()
     }
-
 }
 
 const updateOpeningTime = async (req, res = response, next) => {

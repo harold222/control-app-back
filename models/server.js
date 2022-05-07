@@ -16,7 +16,8 @@ class Server {
             authentication: '/api/auth',
             roles: '/api/roles',
             stations: '/api/stations',
-            registration: '/api/registration'
+            registration: '/api/registration',
+            record: '/api/records'
         }
     }
 
@@ -41,6 +42,7 @@ class Server {
         this.app.use(this.paths.roles, require('../routes/roles'))
         this.app.use(this.paths.stations, require('../routes/stations'))
         this.app.use(this.paths.registration, require('../routes/registrations'))
+        this.app.use(this.paths.record, require('../routes/records'))
     }
 
     listen() {
