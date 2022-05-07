@@ -1,29 +1,53 @@
 {
     "questions": [
         {
-            "hasChildren": "No",
-            "manyChildren": 0,
             "salaryRange": 1000000,
             "civilStatus": "Soltero",
             "hasVehicle": "Si",
             "isStudying": "No",
-            "nacionality": "Colombia"
+            "nacionality": "Colombia",
+            "quantityChildrens": 0,
+            "etnia": "",
+            "numberOfPeopleHousehold": 1,
+            "hasComputer": "No",
+            "hasInternet": "Si",
+            "motorLimitation": ""
         },{
-            "hasChildren": "Si",
-            "manyChildren": 1,
             "salaryRange": 1200000,
             "civilStatus": "Casado",
             "hasVehicle": "No",
             "isStudying": "Si",
-            "nacionality": "Venezuela"
+            "nacionality": "Venezuela",
+            "quantityChildrens": 1,
+            "etnia": "Caucásico",
+            "numberOfPeopleHousehold": 2,
+            "hasComputer": "Si",
+            "hasInternet": "No",
+            "motorLimitation": "dificultades de coordinación"
         },{
-            "hasChildren": "Si",
-            "manyChildren": 2,
             "salaryRange": 1450000,
             "civilStatus": "Divorciado",
             "hasVehicle": "Si",
             "isStudying": "No",
-            "nacionality": "Colombia"
+            "nacionality": "Colombia",
+            "quantityChildrens": 2,
+            "etnia": "Afrocolombiano",
+            "numberOfPeopleHousehold": 4,
+            "hasComputer": "Si",
+            "hasInternet": "Si",
+            "motorLimitation": "habla no inteligible"
+        }, {
+            "salaryRange": 2000000,
+            "civilStatus": "Union Libre",
+            "hasVehicle": "Si",
+            "isStudying": "Si",
+            "nacionality": "Colombia",
+            "quantityChildrens": 2,
+            "etnia": "",
+            "numberOfPeopleHousehold": 3,
+            "hasComputer": "Si",
+            "hasInternet": "Si",
+            "motorLimitation": ""
         }
     ]
 }

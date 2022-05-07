@@ -6,6 +6,10 @@ const RolesSchema = Schema({
         type: String,
         required: [true, 'The rol is required.'],
     },
+    description: {
+        type: String,
+        default: ''
+    }
 }, { versionKey: false })
 
 const db = mongoose.connection.useDb('controlApp');

@@ -1,0 +1,26 @@
+{
+    "stations": [
+        {
+            "name": "Portal 80",
+            "direction": "Tv. 100a #80A-20",
+            "phone": "4339944",
+            "image": "https://files.rcnradio.com/public/2018-11/caos_en_transmilenio_portal_80_0.jpg",
+            "idSupervisor": "",
+            "quantityWorkers": 100,
+            "openingTime": "5:00 am",
+            "closingTime": "11:00 pm",
+            "description": "El Portal de la 80 está ubicado en el sector noroccidental de la ciudad, más específicamente en la Avenida Medellín entre la Avenida Longitudinal de Occidente y la carrera 100. Su acceso peatonal está ubicado sobre la Carrera 100, al frente del Centro Comercial Portal 80."
+        },
+        {
+            "name": "Portal Norte",
+            "direction": "Cra. 46 #17141",
+            "phone": "2203000",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/0/09/Portal_Norte_171119.jpg",
+            "idSupervisor": "",
+            "quantityWorkers": 80,
+            "openingTime": "5:00 am",
+            "closingTime": "11:00 pm",
+            "description": "El Portal del Norte está ubicado en el sector Norte de la ciudad, más específicamente sobre la Autopista Norte entre calles 172 y 176. Su acceso peatonal se da a través de un puente peatonal ubicado sobre la Calle 174. Atiende la demanda de los barrios San Antonio Noroccidental, Villa del Prado, Nueva Zelandia, La Uribe y sus alrededores."
+        }
+    ]
+}

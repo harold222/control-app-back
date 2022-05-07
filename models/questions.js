@@ -3,22 +3,9 @@ const Schema = mongoose.Schema;
 
 const QuestionSchema = Schema({
     idUser: {
-        // pertenece al id del usuario
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         unique: true
-    },
-    hasChildren: {
-        // ¿Tiene hijos? = resp = si - no
-        type: String,
-        required: false,
-        default: "No"
-    },
-    manyChildren: {
-        // ¿Cantidad de hijos? = resp = >= 0
-        type: Number,
-        required: false,
-        default: 0
     },
     salaryRange: {
         // ¿Rango salarial? = resp en COP
@@ -50,6 +37,42 @@ const QuestionSchema = Schema({
         required: false,
         default: "Colombia"
     },
+    manyChildren: {
+        // ¿Cantidad de hijos? = resp = >= 0
+        type: Number,
+        required: false,
+        default: 0
+    },
+    etnia: {
+        // ¿Posee etnia? resp = cual?
+        type: String,
+        required: false,
+        default: ""
+    },
+    numberOfPeopleHousehold: {
+        // ¿Numero de personas en la casa? = resp = >= 0
+        type: Number,
+        required: false,
+        default: 0
+    },
+    hasComputer: {
+        // ¿Posee computador? resp = Si - No
+        type: String,
+        required: false,
+        default: "No"
+    },
+    hasInternet: {
+        // ¿Posee internet? resp = Si - No
+        type: String,
+        required: false,
+        default: "No"
+    },
+    motorLimitation: {
+        // ¿Posee alguna limitacion motriz? resp = cual?
+        type: String,
+        required: false,
+        default: ""
+    }
 }, { versionKey: false })
 
 const db = mongoose.connection.useDb('controlApp');

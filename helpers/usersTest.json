@@ -11,7 +11,6 @@
             "rol": "ADMIN_ROLE",
             "birthDate": "2000-02-03T00:00:00.000Z",
             "sex": "M",
-            "quantityChildrens": 0,
             "state": true
         },
         {
@@ -25,7 +24,6 @@
             "rol": "HUMAN_RESOURCES_ROLE",
             "birthDate": "1990-04-12T00:00:00.000Z",
             "sex": "M",
-            "quantityChildrens": 1,
             "state": true
         },
         {
@@ -39,7 +37,19 @@
             "rol": "USER_ROLE",
             "birthDate": "1992-06-10T00:00:00.000Z",
             "sex": "F",
-            "quantityChildrens": 2,
+            "state": true
+        },
+        {
+            "name": "supervisor",
+            "lastname": "test",
+            "email": "supervisor@test.co",
+            "password": "$2a$12$wW/ETBCXSfA574jiBvHaQ.uMZ9f.U74DTWmTFPseMxT44cbjLDpp6",
+            "phone": 89123456,
+            "img": "https://flyclipart.com/thumb2/admin-user-icon-133438.png",
+            "city": "Bogota",
+            "rol": "SUPERVISOR_ROLE",
+            "birthDate": "1993-08-02T00:00:00.000Z",
+            "sex": "M",
             "state": true
         }
     ]

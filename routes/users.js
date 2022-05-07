@@ -15,12 +15,12 @@ const router = Router();
 
 router.get('/', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
 ], getAllUsers)
 
 router.get('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
     validateFields
@@ -28,14 +28,14 @@ router.get('/:id', [
 
 router.get('/newstate/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
 ], changeStateUser)
 
 router.post('/', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'La contraseña es obligatorio').not().isEmpty(),
     check('email', 'El correo no es valido.').custom(validateEmail),
@@ -47,7 +47,7 @@ router.post('/', [
 
 router.put('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
     check('rol', 'No es un rol valido').custom(validateRol),
@@ -56,7 +56,7 @@ router.put('/:id', [
 
 router.delete('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
 ], deleteUser)

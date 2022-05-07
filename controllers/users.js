@@ -4,6 +4,7 @@ const crypt = require('bcryptjs')
 const User = require('../models/user')
 const Questions = require('../models/questions')
 const Roles = require('../models/roles')
+const Station = require('../models/station')
 const { validationResult } = require('express-validator')
 
 // ---------------TASKS---------------
@@ -15,17 +16,30 @@ const setDefaultUsers = async () => {
         User.insertMany(testUsers.users, (error, inserted) => {
             if (!error) {
                 console.log('Create users test')
-                const basicQuestions = require('../helpers/basicQuestions.json')
+                let basicQuestions = require('../helpers/basicQuestions.json')
 
                 // complete idUser with random id
                 basicQuestions.questions[0]['idUser'] = inserted[0]['_id']
                 basicQuestions.questions[1]['idUser'] = inserted[1]['_id']
-                basicQuestions.questions[2]['idUser'] = inserted[1]['_id']
+                basicQuestions.questions[2]['idUser'] = inserted[2]['_id']
+                basicQuestions.questions[3]['idUser'] = inserted[3]['_id']
 
                 Questions.insertMany(basicQuestions.questions, (err, ins) => {
                     !err ? 
                         console.log('Create basic questions'):
                         console.log('Error basic questions')
+                })
+                
+                let testStations = require('../helpers/station.json')
+                const supervisorId = inserted.find(us => us.rol == 'SUPERISOR_ROLE')['_id']
+
+                testStations.stations[0]['idSupervisor'] = supervisorId
+                testStations.stations[1]['idSupervisor'] = supervisorId
+
+                Station.insertMany(testStations.stations, (err, ins) => {
+                    !err ? 
+                        console.log('Create stations'):
+                        console.log('Error stations')
                 })
             } else 
                 console.log('Error save users')
@@ -40,6 +54,7 @@ const setDefaultRoles = async () => {
         Roles.insertMany([
             { rol: 'ADMIN_ROLE' },
             { rol: 'USER_ROLE' },
+            { rol: 'SUPERVISOR_ROLE' },
             { rol: 'HUMAN_RESOURCES_ROLE' }
         ], (error, inserted) => {
             !error ? 

@@ -1,11 +1,14 @@
-const server = require('./server')
-const User = require('./user')
-const Questions = require('./questions')
-const Roles = require('./roles')
+const   server = require('./server'),
+        User = require('./user'),
+        Questions = require('./questions'),
+        Roles = require('./roles'),
+        Stations = require('./station');
+
 
 module.exports = {
     server,
     User,
     Questions,
-    Roles
+    Roles,
+    Stations
 }
