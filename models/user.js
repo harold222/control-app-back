@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = Schema({
+    document: {
+        type: Number,
+        required: [true, 'The number of document is required'],
+        unique: true
+    },
     name: {
         type: String,
         required: [true, 'The name is required'],

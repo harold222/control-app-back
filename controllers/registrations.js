@@ -1,9 +1,22 @@
 const { response } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const Registration = require('../models/registration')
-const User = require('../models/user')
 const Station = require('../models/station')
 const Records = require('../models/records')
+
+// ---------------TASKS---------------
+
+const updateStateRegistration = async (idOperator, idSupervisor) => {
+    const registration = await Registration.findOneAndUpdate(
+        { state: false, idOperator, idSupervisor },
+        { $set: { state: true } },
+        { new: false }
+    );
+
+    return registration ? true : false
+}
+
+// ---------------API---------------
 
 const createNewRegistration = async (req, res = response, next) => {
     try {
@@ -58,6 +71,69 @@ const createNewRegistration = async (req, res = response, next) => {
 
 }
 
+const updateOpeningTime = async (req, res = response, next) => {
+    try {
+        if (req.body) {
+            await Registration.findOneAndUpdate(
+                { idOperator: req.body.idOperator, idSupervisor: req.body.idSupervisor, state: false },
+                { $set: { openingTime: new Date.now() } },
+                { new: false }
+            );
+        } else
+            res.status(StatusCodes.BAD_GATEWAY).json({
+                status: false,
+                message: 'Ha ocurrido un error.'
+            })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
+const updateClosingTime = async (req, res = response, next) => {
+    try {
+        if (req.body) {
+
+            let registrationdb = await Registration.findOne(
+                {
+                    idOperator: req.body.idOperator,
+                    idSupervisor: req.body.idSupervisor,
+                    state: false
+                }
+            );
+
+            if (registrationdb['openingTime'] != null) {
+                await Registration.findByIdAndUpdate(
+                    registrationdb['_id'],
+                    { $set: { closingTime: new Date.now() } },
+                    { new: false }    
+                )
+            } else {
+                res.status(StatusCodes.BAD_GATEWAY).json({
+                    status: false,
+                    message: 'No realizo el registro de ingreso.'
+                })
+            }
+        } else
+            res.status(StatusCodes.BAD_GATEWAY).json({
+                status: false,
+                message: 'Ha ocurrido un error.'
+            })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 module.exports = {
-    createNewRegistration
+    createNewRegistration,
+    updateOpeningTime,
+    updateStateRegistration,
+    updateClosingTime
 }

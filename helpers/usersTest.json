@@ -1,6 +1,7 @@
 {
     "users": [
         {
+            "document": 111111,
             "name": "admin",
             "lastname": "test",
             "email": "admin@test.co",
@@ -14,6 +15,7 @@
             "state": true
         },
         {
+            "document": 242829,
             "name": "recursos",
             "lastname": "humanos",
             "email": "recursos@test.co",
@@ -27,6 +29,7 @@
             "state": true
         },
         {
+            "document": 654321,
             "name": "juan",
             "lastname": "test",
             "email": "juan@test.co",
@@ -40,6 +43,7 @@
             "state": true
         },
         {
+            "document": 123456,
             "name": "pedro",
             "lastname": "test",
             "email": "pedro@test.co",
@@ -53,6 +57,7 @@
             "state": true
         },
         {
+            "document": 687458,
             "name": "supervisor",
             "lastname": "test",
             "email": "supervisor@test.co",

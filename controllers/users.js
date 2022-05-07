@@ -109,6 +109,22 @@ const getAllUsers = async (req, res = response, next) => {
     }
 }
 
+const getUserByDocument = async (req, res = response, next) => {
+    try {
+        const userDb = await User.findOne({ document: req.params['document'] })
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true,
+            user: userDb,
+        })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 // api/users
 const postUser = async (req, res = response, next) => {
     try {
@@ -204,5 +220,6 @@ module.exports = {
     deleteUser,
     setDefaultUsers,
     setDefaultRoles,
-    changeStateUser
+    changeStateUser,
+    getUserByDocument
 }

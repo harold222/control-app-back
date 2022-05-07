@@ -6,7 +6,8 @@ const {
     postUser,
     putUser,
     deleteUser,
-    changeStateUser
+    changeStateUser,
+    getUserByDocument
 } = require('../controllers/users');
 const { validateRol, validateEmail, validateUser } = require('../helpers/db-validators');
 const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
@@ -60,5 +61,10 @@ router.delete('/:id', [
     check('id', 'id usuario invalido').isMongoId(),
     check('id').custom(validateUser),
 ], deleteUser)
+
+router.get('/document/:document', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'SUPERVISOR_ROLE'),
+], getUserByDocument)
 
 module.exports = router;
