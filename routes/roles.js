@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE'),
 ], getAllRoles)
 
 router.post('/', [

@@ -38,7 +38,7 @@ const UserSchema = Schema({
     rol: {
         type: String,
         required: [true, 'The rol is required'],
-        emun: ['ADMIN_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE', 'HUMAN_RESOURCES_ROLE']
+        emun: ['ADMIN_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE', 'HUMAN_RESOURCES_ROLE']
     },
     // calcular edad a partir de fecha actual -  nacimiento
     birthDate: {

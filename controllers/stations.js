@@ -8,7 +8,7 @@ const getAllStations = async (req, res = response, next) => {
     const allStations = await Station.find({})
     res.status(StatusCodes.ACCEPTED).json({
         status: true,
-        roles: allStations
+        stations: allStations
     }) 
 }
 

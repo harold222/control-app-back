@@ -23,6 +23,7 @@ const setDefaultUsers = async () => {
                 basicQuestions.questions[1]['idUser'] = inserted[1]['_id']
                 basicQuestions.questions[2]['idUser'] = inserted[2]['_id']
                 basicQuestions.questions[3]['idUser'] = inserted[3]['_id']
+                basicQuestions.questions[4]['idUser'] = inserted[4]['_id']
 
                 Questions.insertMany(basicQuestions.questions, (err, ins) => {
                     !err ? 
@@ -35,6 +36,8 @@ const setDefaultUsers = async () => {
 
                 testStations.stations[0]['idSupervisor'] = supervisorId
                 testStations.stations[1]['idSupervisor'] = supervisorId
+
+                testStations.stations[0]['idOperators'] = inserted.filter(us => us.rol == 'OPERATOR_ROLE').map(us => us['_id']);
 
                 Station.insertMany(testStations.stations, (err, ins) => {
                     !err ? 
@@ -53,7 +56,7 @@ const setDefaultRoles = async () => {
     if (!allRoles) {
         Roles.insertMany([
             { rol: 'ADMIN_ROLE' },
-            { rol: 'USER_ROLE' },
+            { rol: 'OPERATOR_ROLE' },
             { rol: 'SUPERVISOR_ROLE' },
             { rol: 'HUMAN_RESOURCES_ROLE' }
         ], (error, inserted) => {

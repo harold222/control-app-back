@@ -12,7 +12,7 @@
             "hasComputer": "No",
             "hasInternet": "Si",
             "motorLimitation": ""
-        },{
+        }, {
             "salaryRange": 1200000,
             "civilStatus": "Casado",
             "hasVehicle": "No",
@@ -24,7 +24,19 @@
             "hasComputer": "Si",
             "hasInternet": "No",
             "motorLimitation": "dificultades de coordinación"
-        },{
+        }, {
+            "salaryRange": 1200000,
+            "civilStatus": "Casado",
+            "hasVehicle": "No",
+            "isStudying": "Si",
+            "nacionality": "Venezuela",
+            "quantityChildrens": 1,
+            "etnia": "Caucásico",
+            "numberOfPeopleHousehold": 2,
+            "hasComputer": "Si",
+            "hasInternet": "No",
+            "motorLimitation": "dificultades de coordinación"
+        }, {
             "salaryRange": 1450000,
             "civilStatus": "Divorciado",
             "hasVehicle": "Si",

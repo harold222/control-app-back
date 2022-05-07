@@ -14,12 +14,12 @@ const router = Router();
 
 router.get('/', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE'),
 ], getAllStations)
 
 router.get('/:id', [
     validateJWT,
-    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'USER_ROLE', 'SUPERVISOR_ROLE'),
+    verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id estacion invalido').isMongoId(),
     validateFields
 ], getSpecificStation)

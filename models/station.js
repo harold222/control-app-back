@@ -25,10 +25,9 @@ const StationSchema = Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: false,
     },
-    quantityWorkers: {
-        type: Number,
+    idOperators: {
+        type: [mongoose.Schema.Types.ObjectId],
         required: false,
-        default: 0
     },
     openingTime: {
         type: String,
