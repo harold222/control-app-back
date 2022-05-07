@@ -11,11 +11,11 @@ const createNewRegistration = async (req, res = response, next) => {
 
             const currentDate = Date.now()
 
-            // crear el historial tambien con Date.now, verificar el await y default para opening y close
+            // crear el historial tambien con Date.now
             const station = await Station.findById(idStation)
             let ids = []
 
-            station.idOperators.forEach(async idOperator => {
+            for (const idOperator of station.idOperators) {
                 const newRegistration = new Registration(
                     {
                         createdTime: currentDate,
@@ -26,8 +26,8 @@ const createNewRegistration = async (req, res = response, next) => {
                 );
                 const { _id } = await newRegistration.save();
                 ids.push(_id);
-            });
-            
+            }
+
             res.status(StatusCodes.CREATED).json({
                 status: true,
                 ids
