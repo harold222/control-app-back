@@ -31,7 +31,7 @@ const setDefaultUsers = async () => {
                 })
                 
                 let testStations = require('../helpers/station.json')
-                const supervisorId = inserted.find(us => us.rol == 'SUPERISOR_ROLE')['_id']
+                const supervisorId = inserted.find(us => us.rol == 'SUPERVISOR_ROLE')['_id']
 
                 testStations.stations[0]['idSupervisor'] = supervisorId
                 testStations.stations[1]['idSupervisor'] = supervisorId
