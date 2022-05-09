@@ -13,7 +13,14 @@ const login = async(req, res = response, next) => {
             const validPassword = bcryptjs.compareSync(password, userDb.password)
 
             if (validPassword) {
-                const token = await generateJWT(userDb.id, userDb.name, userDb.lastname, userDb.email, userDb.rol)
+                const token = await generateJWT(
+                    userDb.id,
+                    userDb.name,
+                    userDb.lastname,
+                    userDb.email,
+                    userDb.rol,
+                    userDb.img
+                )
 
                 return res.status(StatusCodes.ACCEPTED).json({
                     status: true,
