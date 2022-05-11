@@ -3,6 +3,7 @@ const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const Registration = require('../models/registration')
 const Station = require('../models/station')
 const Records = require('../models/records')
+const User = require('../models/user')
 
 // ---------------TASKS---------------
 
@@ -36,6 +37,7 @@ const createNewRegistration = async (req, res = response, next) => {
                     idStation,
                 })
                 const { _id: idHistory  } = await createRecord.save()
+                let users = []
 
                 for (const idOperator of station.idOperators) {
                     const newRegistration = new Registration(
@@ -47,15 +49,14 @@ const createNewRegistration = async (req, res = response, next) => {
                         }
                     );
     
-                    // create registration for each operator
-                    const { _id } = await newRegistration.save();
-                    ids.push(_id);
+                    await newRegistration.save();
+                    users.push(await User.findById(idOperator))
                 }
 
                 res.status(StatusCodes.CREATED).json({
                     status: true,
                     history: idHistory,
-                    ids
+                    users
                 })
             } else {
                 res.status(StatusCodes.BAD_GATEWAY).json({
