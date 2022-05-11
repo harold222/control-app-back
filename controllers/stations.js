@@ -32,7 +32,8 @@ const getStationsBySupervisor = async (req, res = response, next) => {
     const stations = await Station.find({ idSupervisor: req.user['id'] })
     let status = false;
 
-    status && stations?.length
+    if (stations?.length) status = true;
+
     res.status(StatusCodes.ACCEPTED).json({
         status,
         stations
