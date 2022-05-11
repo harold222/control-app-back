@@ -13,7 +13,7 @@ const getAllStations = async (req, res = response, next) => {
 }
 
 // /api/stations/
-const getSpecificStation = async(req, res = response, next) => {
+const getSpecificStation = async (req, res = response, next) => {
     if (req.params) {
         const stationDb = await Station.findById(req.params.id)
 
@@ -26,6 +26,17 @@ const getSpecificStation = async(req, res = response, next) => {
             status: false,
             message: 'Ha ocurrido un error.'
         })
+}
+
+const getStationsBySupervisor = async (req, res = response, next) => {
+    const stations = await Station.find({ idSupervisor: req.user['id'] })
+    let status = false;
+
+    status && stations?.length
+    res.status(StatusCodes.ACCEPTED).json({
+        status,
+        stations
+    }) 
 }
 
 // api/stations
@@ -93,5 +104,6 @@ module.exports = {
     getSpecificStation,
     postStation,
     putStation,
-    deleteStation
+    deleteStation,
+    getStationsBySupervisor
 }

@@ -5,7 +5,8 @@ const {
     deleteStation,
     getSpecificStation,
     postStation,
-    putStation
+    putStation,
+    getStationsBySupervisor
 } = require('../controllers/stations');
 const { validateStation } = require('../helpers/db-validators');
 const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
@@ -17,12 +18,16 @@ router.get('/', [
     verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE'),
 ], getAllStations)
 
-router.get('/:id', [
+router.get('/getStation/:id', [
     validateJWT,
     verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'OPERATOR_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'id estacion invalido').isMongoId(),
     validateFields
 ], getSpecificStation)
+
+router.get('/getStationsBySupervisor', [
+    validateJWT,
+], getStationsBySupervisor)
 
 router.post('/', [
     validateJWT,
