@@ -14,16 +14,16 @@ const RecordSchema = Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    completed: {
+    completedIngress: {
+        type: Boolean,
+        default: false
+    },
+    completedExit: {
         type: Boolean,
         default: false
     }
 }, { versionKey: false })
 
 const db = mongoose.connection.useDb('controlApp');
-RecordSchema.methods.toJSON = function() {
-    const { _id, ...data  } = this.toObject();
-    return data;
-}
 
 module.exports = db.model('Records', RecordSchema);

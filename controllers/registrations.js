@@ -27,7 +27,6 @@ const createNewRegistration = async (req, res = response, next) => {
 
             // get station
             const station = await Station.findById(idStation)
-            let ids = []
         
             if (station.idOperators?.length > 0) {
                 // create a new record
