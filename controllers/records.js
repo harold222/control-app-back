@@ -40,7 +40,27 @@ const updateStateRecordAndHistory = async (req, res = response, next) => {
     }
 }
 
+const getRecordBySupervisor = async (req, res = response, next) => {
+    try {
+        const recordDb = await Record.find({
+            idSupervisor: req.params['idSupervisor'],
+            idStation: req.params['idStation'],
+            completedExit: false
+        })
+
+        if (recordDb?.length) res.status(StatusCodes.CREATED).json({ status: true, record: recordDb[0] })
+        else res.status(StatusCodes.CREATED).json({ status: false, record: null })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 
 module.exports = {
-    updateStateRecordAndHistory
+    updateStateRecordAndHistory,
+    getRecordBySupervisor
 }

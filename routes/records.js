@@ -1,7 +1,8 @@
 const { Router } = require('express')
 const { check } = require('express-validator');
 const {
-    updateStateRecordAndHistory
+    updateStateRecordAndHistory,
+    getRecordBySupervisor
 } = require('../controllers/records');
 const { validateRecord } = require('../helpers/db-validators');
 const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
@@ -18,5 +19,13 @@ router.post('/updateState', [
     validateFields
 ], updateStateRecordAndHistory)
 
+router.get('/getRecordBySupervisor/:idSupervisor/:idStation', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
+    check('idSupervisor', 'El id del supervisor es obligatorio').not().isEmpty(),
+    check('idSupervisor', 'id supervisor invalido').isMongoId(),
+    check('idStation', 'El id de la estacion es obligatorio').not().isEmpty(),
+    check('idStation', 'id estacion invalido').isMongoId(),
+], getRecordBySupervisor)
 
 module.exports = router;
