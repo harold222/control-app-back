@@ -1,6 +1,7 @@
 const { response } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const Station = require('../models/station')
+const Record = require('../models/records')
 
 
 // /api/stations
@@ -30,13 +31,34 @@ const getSpecificStation = async (req, res = response, next) => {
 
 const getStationsBySupervisor = async (req, res = response, next) => {
     const stations = await Station.find({ idSupervisor: req.user['id'] })
-    let status = false;
 
-    if (stations?.length) status = true;
+    let responseReturn = {
+        status: false,
+        stations: []
+    }
+    
+    if (stations?.length) {
+        responseReturn.status = true;
+        for (const station of stations) {
+            const recordsDb = await Record.find({
+                idStation: station['_id'],
+                idSupervisor:  req.user['id'],
+                completedExit: false
+            })
+    
+            let schedule = ''
+    
+            if (recordsDb?.length) {
+                schedule = recordsDb[0]['completedIngress'] === false ?
+                    'ingress' : 'exit'
+            } else  schedule = 'ingress'
+            responseReturn.stations.push({ station, schedule })
+        }
+    }
 
     res.status(StatusCodes.ACCEPTED).json({
-        status,
-        stations
+        status: responseReturn.status,
+        stations: responseReturn.stations
     }) 
 }
 

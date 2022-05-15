@@ -47,9 +47,4 @@ const StationSchema = Schema({
 }, { versionKey: false })
 
 const db = mongoose.connection.useDb('controlApp');
-// StationSchema.methods.toJSON = function() {
-//     const { _id, ...data  } = this.toObject();
-//     return data;
-// }
-
 module.exports = db.model('stations', StationSchema);
