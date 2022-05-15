@@ -80,7 +80,7 @@ const createNewRegistration = async (req, res = response, next) => {
 const updateOpeningTime = async (req, res = response, next) => {
     try {
         if (req.body) {
-            await Registration.findOneAndUpdate(
+            let registrationdb = await Registration.findOneAndUpdate(
                 {
                     idOperator: req.body.idOperator,
                     idSupervisor: req.body.idSupervisor,
@@ -90,7 +90,34 @@ const updateOpeningTime = async (req, res = response, next) => {
                 { $set: { openingTime: Date.now() } },
                 { new: false }
             );
-            res.status(StatusCodes.CREATED).json({ status: true })
+
+            let allRegistrations = await Registration.find({
+                idSupervisor: req.body.idSupervisor,
+                idStation: req.body.idStation,
+                createdTime: registrationdb['createdTime'],
+                openingTime: null,
+                state: false
+            })
+
+            let updateRecord = false
+
+            if (!allRegistrations?.length) {
+                await Records.findOneAndUpdate({
+                    idSupervisor: req.body.idSupervisor,
+                    idStation: req.body.idStation,
+                    createdTime: registrationdb['createdTime'],
+                    completedIngress: false
+                },
+                {
+                    $set: { completedIngress: true }
+                },
+                {
+                    new: false
+                });
+                updateRecord = true;
+            }
+
+            res.status(StatusCodes.CREATED).json({ status: true, updateRecord })
         } else
             res.status(StatusCodes.BAD_GATEWAY).json({
                 status: false,
@@ -118,18 +145,47 @@ const updateClosingTime = async (req, res = response, next) => {
                 }
             );
 
+            let updateRecord = false;
+
             if (registrationdb['openingTime'] != null) {
                 await Registration.findByIdAndUpdate(
                     registrationdb['_id'],
                     { $set: { closingTime: Date.now() } },
                     { new: false }    
                 )
+
+                let allRegistrations = await Registration.find({
+                    idSupervisor: req.body.idSupervisor,
+                    idStation: req.body.idStation,
+                    createdTime: registrationdb['createdTime'],
+                    closingTime: null,
+                    state: false
+                })
+
+                if (!allRegistrations?.length) {
+                    await Records.findOneAndUpdate({
+                        idSupervisor: req.body.idSupervisor,
+                        idStation: req.body.idStation,
+                        createdTime: registrationdb['createdTime'],
+                        completedExit: false
+                    },
+                    {
+                        $set: { completedExit: true }
+                    },
+                    {
+                        new: false
+                    });
+
+                    updateRecord = true;
+
+                    await updateStateRegistration(req.body.idSupervisor, registrationdb['createdTime'])
+                }
                 
-                res.status(StatusCodes.CREATED).json({ status: true })
+                res.status(StatusCodes.CREATED).json({ status: true, updateRecord })
             } else {
                 res.status(StatusCodes.BAD_GATEWAY).json({
                     status: false,
-                    message: 'No realizo el registro de ingreso.'
+                    message: 'No realizo el registro de ingreso, comuniquese con el supervisor.'
                 })
             }
         } else
