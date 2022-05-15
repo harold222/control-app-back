@@ -26,6 +26,8 @@ router.post('/opening', [
     check('idOperator', 'id operario invalido').isMongoId(),
     check('idSupervisor', 'El id del supervisor es obligatorio').not().isEmpty(),
     check('idSupervisor', 'id supervisor invalido').isMongoId(),
+    check('idStation', 'El id de la estacion es obligatorio').not().isEmpty(),
+    check('idStation', 'Id estacion invalido').isMongoId(),
     validateFields
 ],updateOpeningTime)
 
@@ -36,6 +38,8 @@ router.post('/closing', [
     check('idOperator', 'id operario invalido').isMongoId(),
     check('idSupervisor', 'El id del supervisor es obligatorio').not().isEmpty(),
     check('idSupervisor', 'id supervisor invalido').isMongoId(),
+    check('idStation', 'El id de la estacion es obligatorio').not().isEmpty(),
+    check('idStation', 'Id estacion invalido').isMongoId(),
     validateFields
 ],updateClosingTime)
 

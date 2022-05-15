@@ -81,7 +81,12 @@ const updateOpeningTime = async (req, res = response, next) => {
     try {
         if (req.body) {
             await Registration.findOneAndUpdate(
-                { idOperator: req.body.idOperator, idSupervisor: req.body.idSupervisor, state: false },
+                {
+                    idOperator: req.body.idOperator,
+                    idSupervisor: req.body.idSupervisor,
+                    idStation: req.body.idStation,
+                    state: false
+                },
                 { $set: { openingTime: Date.now() } },
                 { new: false }
             );
@@ -108,6 +113,7 @@ const updateClosingTime = async (req, res = response, next) => {
                 {
                     idOperator: req.body.idOperator,
                     idSupervisor: req.body.idSupervisor,
+                    idStation: req.body.idStation,
                     state: false
                 }
             );
