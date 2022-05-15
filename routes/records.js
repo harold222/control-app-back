@@ -29,7 +29,7 @@ router.get('/getRecordBySupervisor/:idSupervisor/:idStation', [
     check('idStation', 'id estacion invalido').isMongoId(),
 ], getRecordBySupervisor)
 
-router.get('/:id', [
+router.get('/getRecord/:id', [
     validateJWT,
     verifyRoles('ADMIN_ROLE', 'HUMAN_RESOURCES_ROLE', 'SUPERVISOR_ROLE'),
     check('id', 'El id del historial es obligatorio').not().isEmpty(),
