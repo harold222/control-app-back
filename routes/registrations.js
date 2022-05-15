@@ -3,7 +3,8 @@ const { check } = require('express-validator');
 const {
     createNewRegistration,
     updateOpeningTime,
-    updateClosingTime
+    updateClosingTime,
+    getOperatorsByRecord
 } = require('../controllers/registrations');
 const { validateStation } = require('../helpers/db-validators');
 const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
@@ -37,6 +38,18 @@ router.post('/closing', [
     check('idSupervisor', 'id supervisor invalido').isMongoId(),
     validateFields
 ],updateClosingTime)
+
+router.post('/getOperatorsByRecord', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
+    check('idSupervisor', 'El id del supervisor es obligatorio').not().isEmpty(),
+    check('idSupervisor', 'id supervisor invalido').isMongoId(),
+    check('idStation', 'El id de estacion es obligatorio').not().isEmpty(),
+    check('idStation', 'id estacion invalido').isMongoId(),
+    check('createdTime', 'El tiempo de creacion es obligatorio').not().isEmpty(),
+    check('schedule', 'El horario es obligatorio').not().isEmpty(),
+    validateFields
+], getOperatorsByRecord)
 
 
 module.exports = router;

@@ -140,9 +140,49 @@ const updateClosingTime = async (req, res = response, next) => {
     }
 }
 
+const getOperatorsByRecord = async (req, res = response, next) => {
+    try{
+        if (req.body) {
+            const { idSupervisor, idStation, createdTime, schedule } = req.body
+
+            let allRegistrations = await Registration.find({
+                idSupervisor, createdTime, idStation, state: false
+            })
+
+            let allUsers = []
+
+            for (const registration of allRegistrations) {
+                switch (schedule) {
+                    case 'ingress':
+                        if (!registration.openingTime)
+                            allUsers.push(await User.findById(registration.idOperator))
+                        break;
+                    default:
+                        if (!registration.closingTime)
+                            allUsers.push(await User.findById(registration.idOperator))
+                        break;
+                }
+            }
+
+            res.status(StatusCodes.CREATED).json({ status: true, allUsers })
+        } else
+            res.status(StatusCodes.BAD_GATEWAY).json({
+                status: false,
+                message: 'Ha ocurrido un error.'
+            })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 module.exports = {
     createNewRegistration,
     updateOpeningTime,
     updateStateRegistration,
-    updateClosingTime
+    updateClosingTime,
+    getOperatorsByRecord
 }
