@@ -22,7 +22,11 @@ const updateStateRecordAndHistory = async (req, res = response, next) => {
         }
 
         if (recordDb) {
-            const status = await updateStateRegistration(recordDb.idSupervisor, recordDb.createdTime)
+            let status = true;
+
+            if (type === 'exit')
+                status = await updateStateRegistration(recordDb.idSupervisor, recordDb.createdTime)
+
             res.status(StatusCodes.CREATED).json({ status })
         } else {
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -59,8 +63,24 @@ const getRecordBySupervisor = async (req, res = response, next) => {
     }
 }
 
+const getSpecificRecord = async(req, res = response, next) => {
+    if (req.params) {
+        const recordDb = await Record.findById(req.params.id)
+
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true,
+            record: recordDb,
+        }) 
+    } else
+        res.status(StatusCodes.BAD_GATEWAY).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+}
+
 
 module.exports = {
     updateStateRecordAndHistory,
-    getRecordBySupervisor
+    getRecordBySupervisor,
+    getSpecificRecord
 }
