@@ -1,7 +1,8 @@
 const { response } = require('express')
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
-const Record = require('../models/records')
 const { updateStateRegistration } = require('./registrations')
+const Record = require('../models/records')
+const Registration = require('../models/registration')
 
 const updateStateRecordAndHistory = async (req, res = response, next) => {
     try {
@@ -78,9 +79,50 @@ const getSpecificRecord = async(req, res = response, next) => {
         })
 }
 
+const getFaultsByRecord = async(req, res = response, next) => {
+    try {
+        const idSupervisor = req.user['id']
+        const { idOperator, idStation } = req.body
+
+        const allFinishedRecods = await Record.find({
+            idSupervisor,
+            idStation,
+            completedExit: true
+        })
+
+        let registrations = []
+
+        for (const recordDb of allFinishedRecods) {
+            const allRegistrations = await Registration.find({
+                idOperator,
+                idSupervisor,
+                idStation,
+                createdTime: recordDb['createdTime'],
+                state: false
+            })
+
+            allRegistrations?.length && allRegistrations.forEach(registration =>
+                    registrations.push(registration)
+                )
+        }
+
+        res.status(StatusCodes.ACCEPTED).json({
+            status: true,
+            registrations
+        })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: false,
+            message: 'Ha ocurrido un error.'
+        })
+        next()
+    }
+}
+
 
 module.exports = {
     updateStateRecordAndHistory,
     getRecordBySupervisor,
-    getSpecificRecord
+    getSpecificRecord,
+    getFaultsByRecord
 }

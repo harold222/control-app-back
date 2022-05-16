@@ -3,7 +3,8 @@ const { check } = require('express-validator');
 const {
     updateStateRecordAndHistory,
     getRecordBySupervisor,
-    getSpecificRecord
+    getSpecificRecord,
+    getFaultsByRecord
 } = require('../controllers/records');
 const { validateRecord } = require('../helpers/db-validators');
 const { validateJWT, verifyRoles, validateFields } = require('../middlewares');
@@ -36,5 +37,15 @@ router.get('/getRecord/:id', [
     check('id', 'id historial invalido').isMongoId(),
     validateFields
 ], getSpecificRecord)
+
+router.post('/getFaultsByRecord', [
+    validateJWT,
+    verifyRoles('ADMIN_ROLE', 'SUPERVISOR_ROLE'),
+    check('idOperator', 'El id de operador es obligatorio').not().isEmpty(),
+    check('idOperator', 'id operador invalido').isMongoId(),
+    check('idStation', 'El id de la estacion es obligatorio').not().isEmpty(),
+    check('idStation', 'id estacion invalido').isMongoId(),
+    validateFields
+], getFaultsByRecord)
 
 module.exports = router;

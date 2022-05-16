@@ -125,7 +125,6 @@ const deleteStation = async(req, res = response, next) => {
 
 const getOperatorsByStation = async (req, res = response, next) => {
     try {
-        req.user['id']
         const stationDb = await Station.findById(req.params.id)
         let operators = []
 
