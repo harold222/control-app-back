@@ -98,7 +98,7 @@ const getFaultsByRecord = async(req, res = response, next) => {
                 idSupervisor,
                 idStation,
                 createdTime: recordDb['createdTime'],
-                state: false
+                // state: true
             })
 
             allRegistrations?.length && allRegistrations.forEach(registration =>
