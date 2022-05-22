@@ -1,40 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
-// cuando el supervisor ya terminar de registrar horarios de ingreso, se devuelve del buscador de cedula
-// y debera eliminarse la opcion "registrar horarios de ingreso" por "registrar horarios de salida"
-// donde se hara lo mismo que el primer caso
-// para obtener el horario de salida, como se guarda en el historial con el id
-// puedo buscar en esa tabla con idSupervisor y obtener todos los historiales que estan aun abiertos
-// sin importar la fecha, esto se le muestra en el front al darle a la opcion "registrar horarios de salida",
-// opcion de escojer en que estacion lo desea y hay si mostrar los diferentes historiales abiertos
-// una vez le de seleccionar al registro que quiera aparecera la opcion del buscador de cedulas
-// cuando se termine de registrar existira un boton de terminar, al darle a este boton
-// enviara una peticion al backend para cambiar el estado
-// de ese historial por medio del idHistorial para cerrar el completed
-// y ademas en el registro de cada operador se cambiara el state a True
-// halla tenido o no fallas en el horario
-
-
-// por medio del idStation = obtengo la estacion, verifico que en idOperators este el id del operario
-// sino mostrar mensaje que ese operario no pertenece a esta estacion 
-
-// para el registro de abrir, envio la fecha, id supervisor y el id del operario y lo guardo asi
-// para el registro de cierre, envio la fecha, id supervisor y el id del operario
-// verifico que exista ya un documento con ese id y la fecha de ese dia
-// sino se encuentra mostrar un mensaje de que no se puede cerrar horario ya que no realizo el ingreso
-// si se encuentra actualizo solo closingTime 
-
-
-// para obtner las faltas de los operarios, lo puede hacer solo el supervisor, a el le aparecen
-// un listado con las estaciones que tiene encargadas al darle click a cada una debera aparecer la opcion
-// de editar datos de la estacion y obtener fallas del dia =
-// para obtener las faltas de los operarios puedo realizar un filtro que se tenga
-// de fechas ejemplo hace un dia, una semana, un mes y genero una agregacion que me haga ese filtrado por
-// la fecha de createdTime y verifico si opening o closing estan en null con ese determino en que momento
-// hubo un problema y de ser asi envio una notificacion al correo
-
 const RegistrationSchema = Schema({
     createdTime:{
         type: Date,
