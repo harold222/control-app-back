@@ -17,5 +17,5 @@ El proyecto esta basado en Javascript y usa tecnologias como Nodejs con Express 
 - Realizar pull request solo a rama master
 - Las actividades para hacer se encuentran en [https://github.com/orgs/control-app/projects/1]
 - Para conexion a la base de datos usar: ``` mongodb+srv://2harold2:fUs8utwL42f64wXW@cluster0.rjayg.mongodb.net/controlApp?retryWrites=true&w=majority ```
-- Se hace deploy en heroku con cada cambio en rama master: ``` https://controlbackapp.herokuapp.com/ ```
+- Se hace deploy en heroku con cada cambio en rama master: ``` https://controlappback.herokuapp.com/ ```
 - Contraseña de usuarios de prueba: ``` Test123 ```
